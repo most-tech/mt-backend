@@ -1,6 +1,11 @@
 click==7.1.2
 dataclasses-json==0.5.2
+elasticsearch==7.11.0
 Flask==1.1.2
+Flask-Cors==3.0.8
+Flask-Injector==0.12.3
+google-cloud-firestore==1.9.0
+google-cloud-secret-manager==2.3.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1

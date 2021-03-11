@@ -36,10 +36,10 @@ jobs:
     - name: Lint with pylint
       run: |
         pylint app main.py
-#        Skipping for now
-#    - name: Unit tests
-#      run: |
-#        pytest tests
-#    - name: Component tests
-#      run: |
-#        python -m pytest component-tests
+    - name: Unit tests
+      run: |
+        pytest tests/
+#     Skipping for now
+#   - name: Component tests
+#     run: |
+#       python -m pytest component-tests
