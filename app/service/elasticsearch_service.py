@@ -1,11 +1,8 @@
 # pylint: disable=E1101,W0613
 # This class is just a prototype. Disabled unused argument rule
 from abc import ABC
-
 from elasticsearch import Elasticsearch
 from google.cloud import secretmanager
-from injector import inject
-
 from app.models.search_query import SearchQuery
 from app.service.search_service import SearchService
 
@@ -15,7 +12,7 @@ class ElasticsearchService(ABC, SearchService):
         client = secretmanager.SecretManagerServiceClient()
         response = client.access_secret_version(name=secret_id)
         password = response.payload.data.decode("UTF-8")
-        self.es = Elasticsearch(
+        self.elasticsearch = Elasticsearch(
             cloud_id=cloud_id,
             http_auth=(user_id, password),
         )
