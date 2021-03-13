@@ -18,7 +18,6 @@ def hello():
 @SEARCH.route("/query", methods=["GET"])
 @cross_origin()
 def search_by_query(search_service: SearchService):
-    print(request.data)
     search_query = SearchQuery.from_json(request.data)
     result = search_service.execute_search_query(search_query)
     if result is None:
