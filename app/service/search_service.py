@@ -10,3 +10,4 @@ class SearchService:
     @abstractmethod
     def execute_search_query(self, search_query: SearchQuery):
         """Evaluate given search query and return the list of results"""
+

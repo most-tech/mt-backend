@@ -18,6 +18,13 @@ class ElasticsearchService(ABC, SearchService):
         )
 
     def execute_search_query(self, search_query: SearchQuery):
-        pass
-        # do get to elasticsearch with url
-        # return prepared results
+        result = self.elasticsearch.search(index="test-index-paterns",
+                                           body={"query":
+                                                            {"wildcard":{
+                                                                "patern":
+                                                                 {"value":f"*{search_query.keystroke}*"}
+                                                             }
+                                                        }}
+                        )
+        return [patern['_source']["patern"] for patern in result['hits']['hits']]
+
