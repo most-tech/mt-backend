@@ -17,6 +17,7 @@ def configure(binder):
             config["ELASTICSEARCH_CLOUD_ID"],
             config["ELASTICSEARCH_USER_ID"],
             config["ELASTICSEARCH_SECRET_ID"],
+            config["ELASTICSEARCH_INDEX"],
         ),
         scope=singleton,
     )
