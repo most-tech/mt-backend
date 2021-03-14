@@ -16,8 +16,7 @@ class ElasticsearchService(ABC, SearchService):
             cloud_id=cloud_id,
             http_auth=(user_id, password),
         )
-        self.index  = index
-
+        self.index = index
 
     def execute_search_query(self, search_query: SearchQuery):
         result = self.elasticsearch.search(
