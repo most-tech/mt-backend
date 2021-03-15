@@ -19,12 +19,18 @@ class ElasticsearchService(ABC, SearchService):
         self.index = index
 
     def execute_search_query(self, search_query: SearchQuery):
-        result = self.elasticsearch.search(
-            index=self.index,
-            body={
-                "query": {
-                    "wildcard": {"patern": {"value": f"*{search_query.keystroke}*"}}
-                }
-            },
-        )
-        return [patern["_source"]["patern"] for patern in result["hits"]["hits"]]
+        result = self.elasticsearch.search(index="most-tech-dev", body={
+            "query": {
+                "multi_match":
+                    {
+                        "query": f"{search_query.keystroke}",
+                        "fuzziness": "AUTO",
+                        "prefix_length":1,
+                        "type": "bool_prefix",
+                        "fields": [
+                               "keystroke",
+                               "keystroke._2gram",
+                               "keystroke._3gram"]
+                    }
+            }})['hits']['hits']
+        return {"list":[patern["_source"] for patern in result]}
