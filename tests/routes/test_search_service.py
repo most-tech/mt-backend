@@ -1,4 +1,4 @@
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery
 
 SEARCH_ENDPOINT = "/search/"
 QUERY_ENDPOINT = SEARCH_ENDPOINT + "query"

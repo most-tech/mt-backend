@@ -2,7 +2,7 @@ from flask import Blueprint, abort, request
 from flask_cors import cross_origin
 from injector import inject
 
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery, SearchResponse
 from app.service.search_service import SearchService
 
 SEARCH = Blueprint("search", __name__, url_prefix="/search")
@@ -22,4 +22,4 @@ def search_by_query(search_service: SearchService):
     result = search_service.execute_search_query(search_query)
     if result is None:
         abort(404, description="Resource not found")
-    return result
+    return SearchResponse.from_result(result).to_json()
