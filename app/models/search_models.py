@@ -12,7 +12,7 @@ class SearchQuery:
 @dataclass_json
 @dataclass
 class SearchResponse:
-    responses_from_querry: list
+    searchResults: list
 
     @staticmethod
     def from_result(result):

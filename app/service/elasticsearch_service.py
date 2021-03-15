@@ -33,4 +33,4 @@ class ElasticsearchService(ABC, SearchService):
                 }
             },
         )["hits"]["hits"]
-        return [patern["_source"] for patern in result]
+        return [pattern["_source"] for pattern in result]
