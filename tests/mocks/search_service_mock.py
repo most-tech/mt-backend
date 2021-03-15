@@ -4,7 +4,7 @@ from app.models.search_models import SearchQuery
 from app.service.search_service import SearchService
 
 TEST_DATA = {
-    "test1": '{"results": [{"paragraph":"test paragraph 1"},{"paragraph":"test paragraph 2"}]}'
+    "test1": [{"paragraph":"test paragraph 1"},{"paragraph":"test paragraph 2"}]
 }
 
 
