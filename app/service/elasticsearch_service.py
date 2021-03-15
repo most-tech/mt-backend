@@ -3,7 +3,7 @@
 from abc import ABC
 from elasticsearch import Elasticsearch
 from google.cloud import secretmanager
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery
 from app.service.search_service import SearchService
 
 
@@ -33,4 +33,4 @@ class ElasticsearchService(ABC, SearchService):
                 }
             },
         )["hits"]["hits"]
-        return {"list": [patern["_source"] for patern in result]}
+        return [pattern["_source"] for pattern in result]

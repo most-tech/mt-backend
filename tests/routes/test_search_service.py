@@ -1,4 +1,4 @@
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery
 
 SEARCH_ENDPOINT = "/search/"
 QUERY_ENDPOINT = SEARCH_ENDPOINT + "query"
@@ -16,5 +16,5 @@ def test_search_query(test_client):
     assert response.status_code == 200
     assert (
         response.get_data(as_text=True)
-        == '{"results": [{"paragraph":"test paragraph 1"},{"paragraph":"test paragraph 2"}]}'
+        == '{"searchResults": [{"paragraph": "test paragraph 1"}, {"paragraph": "test paragraph 2"}]}'
     )
