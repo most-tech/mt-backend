@@ -1,6 +1,6 @@
 from abc import ABC
 
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery
 from app.service.search_service import SearchService
 
 TEST_DATA = {

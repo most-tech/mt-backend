@@ -1,7 +1,7 @@
 # pylint: disable=E1101,W0613
 # Service interface. Disabled unused argument rule.
 from abc import abstractmethod
-from app.models.search_query import SearchQuery
+from app.models.search_models import SearchQuery
 
 
 class SearchService:
