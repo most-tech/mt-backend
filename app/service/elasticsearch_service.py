@@ -24,13 +24,15 @@ class ElasticsearchService(ABC, SearchService):
             body={
                 "query": {
                     "multi_match": {
-                        "query": f"{search_query.parapgraph}",
+                        "query": f"{search_query.paragraph}",
                         "fuzziness": "AUTO",
                         "prefix_length": 1,
                         "type": "bool_prefix",
                         "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
                     }
-                }
+                },
+                "aggs": {"facets": {"terms": {"field": "labels"}}},
+                "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
             },
-        )["hits"]["hits"]
-        return [pattern["_source"] for pattern in result]
+        )
+        return result

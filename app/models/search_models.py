@@ -5,7 +5,7 @@ from dataclasses_json import dataclass_json, LetterCase
 @dataclass_json
 @dataclass
 class SearchQuery:
-    parapgraph: str
+    paragraph: str
     labels: str
 
 
