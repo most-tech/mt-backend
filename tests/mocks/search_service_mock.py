@@ -10,4 +10,4 @@ TEST_DATA = {
 
 class SearchServiceMock(ABC, SearchService):
     def execute_search_query(self, search_query: SearchQuery):
-        return TEST_DATA[search_query.keystroke]
+        return TEST_DATA[search_query.parapgraph]

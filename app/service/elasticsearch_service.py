@@ -20,15 +20,15 @@ class ElasticsearchService(ABC, SearchService):
 
     def execute_search_query(self, search_query: SearchQuery):
         result = self.elasticsearch.search(
-            index="most-tech-dev",
+            index=self.index,
             body={
                 "query": {
                     "multi_match": {
-                        "query": f"{search_query.keystroke}",
+                        "query": f"{search_query.parapgraph}",
                         "fuzziness": "AUTO",
                         "prefix_length": 1,
                         "type": "bool_prefix",
-                        "fields": ["keystroke", "keystroke._2gram", "keystroke._3gram"],
+                        "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
                     }
                 }
             },
