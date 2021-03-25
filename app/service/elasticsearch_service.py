@@ -34,3 +34,9 @@ class ElasticsearchService(ABC, SearchService):
             },
         )["hits"]["hits"]
         return [pattern["_source"] for pattern in result]
+
+    def insert_document(self, paragraph: str, header: str, labels: list):
+        self.elasticsearch.index(
+            index=self.index,
+            body={"labels": labels, "paragraph": paragraph, "header": header},
+        )
