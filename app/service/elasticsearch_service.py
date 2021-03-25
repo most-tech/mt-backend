@@ -21,6 +21,7 @@ class ElasticsearchService(ABC, SearchService):
     def execute_search_query(self, search_query: SearchQuery):
         result = self.elasticsearch.search(
             index=self.index,
+            search_type="dfs_query_then_fetch",
             body={
                 "query": {
                     "multi_match": {
@@ -29,7 +30,9 @@ class ElasticsearchService(ABC, SearchService):
                         "prefix_length": 1,
                         "type": "bool_prefix",
                         "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
-                    }
+
+                    },
+
                 },
                 "aggs": {"facets": {"terms": {"field": "labels"}}},
                 "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
