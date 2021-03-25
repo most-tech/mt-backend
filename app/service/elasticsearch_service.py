@@ -30,9 +30,7 @@ class ElasticsearchService(ABC, SearchService):
                         "prefix_length": 1,
                         "type": "bool_prefix",
                         "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
-
                     },
-
                 },
                 "aggs": {"facets": {"terms": {"field": "labels"}}},
                 "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
