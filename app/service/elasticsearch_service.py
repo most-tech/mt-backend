@@ -24,16 +24,27 @@ class ElasticsearchService(ABC, SearchService):
             search_type="dfs_query_then_fetch",
             body={
                 "query": {
-                    "multi_match": {
-                        "query": f"{search_query.paragraph}",
-                        "fuzziness": "AUTO",
-                        "prefix_length": 1,
-                        "type": "bool_prefix",
-                        "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
-                    },
-                },
+                    "bool": {
+                        "must": [
+                            {"multi_match": {
+                                                       "query": f"{search_query.paragraph}",
+                                                       "fuzziness": "AUTO",
+                                                       "prefix_length": 1,
+                                                       "type": "bool_prefix",
+                                                       "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
+                                                   },
+                            }],
+                        "should":[
+                            {"match": {
+                                "labels": {"query": f"{search_query.labels}"}
+                            }
+                             },
+                        ]
+        },#end bool
+
+            }, #query - main query
                 "aggs": {"facets": {"terms": {"field": "labels"}}},
                 "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
-            },
+            } #body
         )
         return result
