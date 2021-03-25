@@ -2,7 +2,7 @@ from flask import Blueprint, abort, request
 from flask_cors import cross_origin
 from injector import inject
 
-from app.models.search_models import SearchQuery, SearchResponse
+from app.models.search_models import SearchQuery
 from app.service.search_service import SearchService
 
 SEARCH = Blueprint("search", __name__, url_prefix="/search")

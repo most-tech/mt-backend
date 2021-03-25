@@ -1,4 +1,4 @@
-# pylint: disable=E1101,W0613
+# pylint: disable=E1101,W0613,E1123
 # This class is just a prototype. Disabled unused argument rule
 from abc import ABC
 from elasticsearch import Elasticsearch
