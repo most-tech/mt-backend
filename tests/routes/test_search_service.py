@@ -11,10 +11,10 @@ def test_hello(test_client):
 
 
 def test_search_query(test_client):
-    sq = SearchQuery(keystroke="test1", labels="").to_json()
+    sq = SearchQuery(paragraph="test1", labels="testlabel").to_json()
     response = test_client.get(QUERY_ENDPOINT, data=sq, content_type="application/json")
     assert response.status_code == 200
     assert (
         response.get_data(as_text=True)
-        == '{"searchResults": [{"paragraph": "test paragraph 1"}, {"paragraph": "test paragraph 2"}]}'
+        == '[{"paragraph": "test paragraph 1"}, {"paragraph": "test paragraph 2"}]'
     )
