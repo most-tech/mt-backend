@@ -26,25 +26,27 @@ class ElasticsearchService(ABC, SearchService):
                 "query": {
                     "bool": {
                         "must": [
-                            {"multi_match": {
-                                                       "query": f"{search_query.paragraph}",
-                                                       "fuzziness": "AUTO",
-                                                       "prefix_length": 1,
-                                                       "type": "bool_prefix",
-                                                       "fields": ["paragraph", "paragraph._2gram", "paragraph._3gram"],
-                                                   },
-                            }],
-                        "should":[
-                            {"match": {
-                                "labels": {"query": f"{search_query.labels}"}
+                            {
+                                "multi_match": {
+                                    "query": f"{search_query.paragraph}",
+                                    "fuzziness": "AUTO",
+                                    "prefix_length": 1,
+                                    "type": "bool_prefix",
+                                    "fields": [
+                                        "paragraph",
+                                        "paragraph._2gram",
+                                        "paragraph._3gram",
+                                    ],
+                                },
                             }
-                             },
-                        ]
-        },#end bool
-
-            }, #query - main query
+                        ],
+                        "should": [
+                            {"match": {"labels": {"query": f"{search_query.labels}"}}},
+                        ],
+                    },  # end bool
+                },  # query - main query
                 "aggs": {"facets": {"terms": {"field": "labels"}}},
                 "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
-            } #body
+            },  # body
         )
         return result
