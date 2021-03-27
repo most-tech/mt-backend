@@ -23,6 +23,6 @@ class ElasticsearchService(ABC, SearchService):
         result = self.elasticsearch.search(
             index=self.index,
             search_type="dfs_query_then_fetch",
-            body=QueryBuilder.from_search_request(search_request)
+            body=QueryBuilder.from_search_request(search_request),
         )
         return result
