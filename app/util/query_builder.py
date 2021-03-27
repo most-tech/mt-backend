@@ -4,35 +4,37 @@ from app.models.search_models import SearchRequest
 class QueryBuilder:
     @staticmethod
     def from_search_request(search_request: SearchRequest):
-        def _get_filters(search_request):
-            filters = [
-                {
-                    "multi_match": {
-                        "query": f"{search_request.search_term}",
-                        "fuzziness": "AUTO",
-                        "prefix_length": 1,
-                        "type": "bool_prefix",
-                        "fields": [
-                            "paragraph",
-                            "paragraph._2gram",
-                            "paragraph._3gram",
-                        ],
-                    },
-                }
-            ]
-            if search_request.labels != "":
-                filters.append(
-                    {"match": {"labels": {"query": f"{search_request.labels}"}}}
+        def _get_facet_query(field_name, facet):
+            list(
+                map(
+                    lambda label: {"match": {field_name: {"query": f"{label}"}}},
+                    facet,
                 )
-            return filters
+            )
 
-        # from_search_request
         return {
             "query": {
-                "bool": {"must": _get_filters(search_request=search_request)},
+                "bool": {
+                    "must": [
+                                {
+                                    "multi_match": {
+                                        "query": f"{search_request.search_term}",
+                                        "fuzziness": "AUTO",
+                                        "prefix_length": 1,
+                                        "type": "bool_prefix",
+                                        "fields": [
+                                            "paragraph",
+                                            "paragraph._2gram",
+                                            "paragraph._3gram",
+                                        ],
+                                    },
+                                }
+                            ]
+                            + _get_facet_query("labels", search_request.labels)
+                },
             },
             "aggs": {
-                "facets": {"terms": {"field": "labels", "exclude": [""]}},
+                "labels": {"terms": {"field": "labels"}},
             },
             "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
         }
