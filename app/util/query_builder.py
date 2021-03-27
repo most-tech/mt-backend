@@ -21,9 +21,11 @@ class QueryBuilder:
                 }
             ]
             if search_request.labels != "":
-                filters.append(
-                    {"match": {"labels": {"query": f"{search_request.labels}"}}}
-                )
+                for keyword in search_request.labels.split(","):
+                    if keyword != "":
+                        filters.append(
+                            {"match": {"labels": {"query": f"{keyword.strip()}"}}}
+                        )
             return filters
 
         # from_search_request
