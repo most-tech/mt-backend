@@ -22,5 +22,4 @@ def search_by_query(search_service: SearchService):
     result = search_service.execute_search_query(search_query)
     if result is None:
         abort(404, description="Resource not found")
-    # return SearchResponse.from_result(result).to_json()
     return result
