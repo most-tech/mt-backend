@@ -1,4 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
+
 from dataclasses_json import dataclass_json
 
 from dataclasses_json import LetterCase
@@ -8,4 +10,4 @@ from dataclasses_json import LetterCase
 @dataclass
 class SearchRequest:
     search_term: str
-    labels: str
+    labels: List[str] = field(default_factory=list)

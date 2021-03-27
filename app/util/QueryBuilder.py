@@ -9,7 +9,7 @@ class QueryBuilder:
                 "bool": {"must": get_filters(search_request)},
             },
             "aggs": {
-                "facets": {"terms": {"field": "labels", "exclude": [""]}},
+                "labels": {"terms": {"field": "labels"}},
             },
             "highlight": {"fields": {"paragraph": {"number_of_fragments": 0}}},
         }
@@ -30,7 +30,10 @@ def get_filters(search_request):
                 ],
             },
         }
-    ]
-    if search_request.labels != "":
-        filters.append({"match": {"labels": {"query": f"{search_request.labels}"}}})
+    ] + list(
+        map(
+            lambda label: {"match": {"labels": {"query": f"{label}"}}},
+            search_request.labels,
+        )
+    )
     return filters
