@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch
 from google.cloud import secretmanager
 from app.models.search_models import SearchRequest
 from app.service.search_service import SearchService
-from app.util.QueryBuilder import QueryBuilder
+from app.util.query_builder import QueryBuilder
 
 
 class ElasticsearchService(ABC, SearchService):

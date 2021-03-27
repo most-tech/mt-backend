@@ -8,5 +8,5 @@ class SearchService:
     """Interface for Search Service"""
 
     @abstractmethod
-    def execute_search_query(self, search_query: SearchRequest):
+    def execute_search_query(self, search_request: SearchRequest):
         """Evaluate given search query and return the list of results"""
