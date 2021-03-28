@@ -5,7 +5,7 @@ class QueryBuilder:
     @staticmethod
     def from_search_request(search_request: SearchRequest):
         def _get_facet_query(field_name, facet):
-            list(
+            return list(
                 map(
                     lambda label: {"match": {field_name: {"query": f"{label}"}}},
                     facet,
@@ -29,8 +29,8 @@ class QueryBuilder:
                                         ],
                                     },
                                 }
-                            ]
-                            + _get_facet_query("labels", search_request.labels)
+                            ] + _get_facet_query("labels", search_request.labels)
+
                 },
             },
             "aggs": {
