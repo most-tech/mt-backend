@@ -32,7 +32,7 @@ jobs:
         black --check main.py app
     - name: Lint with flake8
       run: |
-        flake8 app main.py --count --exit-zero --statistics
+        flake8 app main.py --count --statistics --max-line-length=120
     - name: Lint with pylint
       run: |
         pylint app main.py
