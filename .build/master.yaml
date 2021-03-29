@@ -1,0 +1,12 @@
+steps:
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Deploy devint
+    args: ["app", "deploy","--project=most-tech-devint"]
+    env:
+      - "FLASK_CONFIGURATION=dev"
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Deploy prod
+    args: ["app", "deploy","--project=most-tech-prod"]
+    env:
+      - "FLASK_CONFIGURATION=prod"
+timeout: "1600s"
