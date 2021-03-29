@@ -5,4 +5,4 @@ handlers:
     script: auto
 
 env_variables:
-  FLASK_CONFIGURATION: 'prod'
+  FLASK_CONFIGURATION: 'DEV'
