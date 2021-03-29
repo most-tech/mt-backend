@@ -1,10 +1,11 @@
-# pylint: disable=E1101,W0613
+# pylint: disable=E1101,W0613,E1123
 # This class is just a prototype. Disabled unused argument rule
 from abc import ABC
 from elasticsearch import Elasticsearch
 from google.cloud import secretmanager
-from app.models.search_models import SearchQuery
+from app.models.search_models import SearchRequest
 from app.service.search_service import SearchService
+from app.util.query_builder import QueryBuilder
 
 
 class ElasticsearchService(ABC, SearchService):
@@ -18,19 +19,10 @@ class ElasticsearchService(ABC, SearchService):
         )
         self.index = index
 
-    def execute_search_query(self, search_query: SearchQuery):
+    def execute_search_query(self, search_request: SearchRequest):
         result = self.elasticsearch.search(
-            index="most-tech-dev",
-            body={
-                "query": {
-                    "multi_match": {
-                        "query": f"{search_query.keystroke}",
-                        "fuzziness": "AUTO",
-                        "prefix_length": 1,
-                        "type": "bool_prefix",
-                        "fields": ["keystroke", "keystroke._2gram", "keystroke._3gram"],
-                    }
-                }
-            },
-        )["hits"]["hits"]
-        return [pattern["_source"] for pattern in result]
+            index=self.index,
+            search_type="dfs_query_then_fetch",
+            body=QueryBuilder.from_search_request(search_request),
+        )
+        return result
