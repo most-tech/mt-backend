@@ -4,6 +4,7 @@ from abc import ABC
 from elasticsearch import Elasticsearch
 from google.cloud import secretmanager
 from app.models.search_models import SearchRequest
+from app.models.crud_models import LegalDocument
 from app.service.search_service import SearchService
 from app.util.query_builder import QueryBuilder
 
@@ -27,13 +28,8 @@ class ElasticsearchService(ABC, SearchService):
         )
         return result
 
-    def insert_document(self, paragraph: str, labels: list, header: str, link: str):
+    def insert_document(self, legal_document: LegalDocument):
         self.elasticsearch.index(
             index=self.index,
-            body={
-                "paragraph": paragraph,
-                "labels": labels,
-                "header": header,
-                "link": link,
-            },
+            body=legal_document.to_json(),
         )
