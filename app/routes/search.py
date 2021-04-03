@@ -3,9 +3,11 @@ from flask_cors import cross_origin
 from injector import inject
 
 from app.models.search_models import SearchRequest
+from app.models.crud_models import LegalDocument
 from app.service.search_service import SearchService
 
 SEARCH = Blueprint("search", __name__, url_prefix="/search")
+MANAGE = Blueprint("manage", __name__, url_prefix="/manage")
 
 
 @SEARCH.route("/")
@@ -23,3 +25,17 @@ def search_by_query(search_service: SearchService):
     if result is None:
         abort(404, description="Resource not found")
     return result
+
+
+@MANAGE.route("/")
+def hello_manage():
+    """Greetings endpoint."""
+    return "yo, yo, manage speaking!"
+
+
+@inject
+@MANAGE.route("/insert", methods=["POST"])
+@cross_origin()
+def insert_new_document(search_service: SearchService):
+    new_document = LegalDocument.from_json(request.data)
+    search_service.insert_document(new_document)

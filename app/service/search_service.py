@@ -2,6 +2,7 @@
 # Service interface. Disabled unused argument rule.
 from abc import abstractmethod
 from app.models.search_models import SearchRequest
+from app.models.crud_models import LegalDocument
 
 
 class SearchService:
@@ -12,5 +13,5 @@ class SearchService:
         """Evaluate given search query and return the list of results"""
 
     @abstractmethod
-    def insert_document(self, paragraph: str, labels: list, header: str, link: str):
+    def insert_document(self, legal_document: LegalDocument):
         "Insert new paragraph to db"
