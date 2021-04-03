@@ -11,5 +11,6 @@ class SearchService:
     def execute_search_query(self, search_request: SearchRequest):
         """Evaluate given search query and return the list of results"""
 
-    def insert_document(self, paragraph: str, header: str, labels: list):
+    @abstractmethod
+    def insert_document(self, paragraph: str, labels: list, header: str, link: str):
         "Insert new paragraph to db"

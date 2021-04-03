@@ -27,8 +27,13 @@ class ElasticsearchService(ABC, SearchService):
         )
         return result
 
-    def insert_document(self, paragraph: str, header: str, labels: list):
+    def insert_document(self, paragraph: str, labels: list, header: str, link: str):
         self.elasticsearch.index(
             index=self.index,
-            body={"labels": labels, "paragraph": paragraph, "header": header},
+            body={
+                "paragraph": paragraph,
+                "labels": labels,
+                "header": header,
+                "link": link,
+            },
         )
