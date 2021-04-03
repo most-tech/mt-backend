@@ -1,22 +1,13 @@
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json, LetterCase
+from dataclasses import dataclass, field
+from typing import List
 
+from dataclasses_json import dataclass_json
 
-@dataclass_json
-@dataclass
-class SearchQuery:
-    keystroke: str
-    labels: str
+from dataclasses_json import LetterCase
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
-class SearchResponse:
-    search_results: list
-
-    @staticmethod
-    def from_result(result):
-        return SearchResponse(result)
-        # result can be also a list of SearchQuery elements
-        # return SearchResponse([SearchQuery.from_json(element) for element in result])
-        # because this part of response from elastic has the same structure as SearchQuery class
+class SearchRequest:
+    search_term: str
+    labels: List[str] = field(default_factory=list)
