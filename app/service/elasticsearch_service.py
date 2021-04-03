@@ -26,3 +26,14 @@ class ElasticsearchService(ABC, SearchService):
             body=QueryBuilder.from_search_request(search_request),
         )
         return result
+
+    def insert_document(self, paragraph: str, labels: list, header: str, link: str):
+        self.elasticsearch.index(
+            index=self.index,
+            body={
+                "paragraph": paragraph,
+                "labels": labels,
+                "header": header,
+                "link": link,
+            },
+        )
