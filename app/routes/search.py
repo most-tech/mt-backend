@@ -6,7 +6,7 @@ from app.models.search_models import SearchQuery, SearchResponse
 from app.service.search_service import SearchService
 
 SEARCH = Blueprint("search", __name__, url_prefix="/search")
-
+MANAGE = Blueprint("manage",__name__, url_prefix="/manage")
 
 @SEARCH.route("/")
 def hello():
@@ -18,6 +18,23 @@ def hello():
 @SEARCH.route("/query", methods=["GET"])
 @cross_origin()
 def search_by_query(search_service: SearchService):
+    search_query = SearchQuery.from_json(request.data)
+    result = search_service.execute_search_query(search_query)
+    if result is None:
+        abort(404, description="Resource not found")
+    return SearchResponse.from_result(result).to_json()
+
+
+@MANAGE.route("/")
+def hello():
+    """Greetings endpoint."""
+    return "yo, yo, manage speaking!"
+
+
+@inject
+@MANAGE.route("/insert", methods=["POST"])
+@cross_origin()
+def insert_new_document(search_service: SearchService):
     search_query = SearchQuery.from_json(request.data)
     result = search_service.execute_search_query(search_query)
     if result is None:
